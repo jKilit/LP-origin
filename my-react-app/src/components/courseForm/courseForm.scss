@@ -1,0 +1,24 @@
+.course-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+
+  .modules-section {
+    margin-bottom: 20px;
+  }
+
+  .buttons {
+    display: flex;
+}
+
+.submit-button {
+    margin-top: 20px;
+    margin-left: auto;
+}
+  .card-header .btn-link {
+    width: 100%;
+    text-align: left;
+  }
+}

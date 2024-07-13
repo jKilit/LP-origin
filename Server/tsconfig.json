@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "baseUrl": "src",
+    "outDir": "dist",
+    "sourceMap": true,
+    "noImplicitAny": true,  
+    "noEmit": true,
+    "allowImportingTsExtensions": true,      
+  },
+  "include": [
+    "src/**/*.ts",   /* Include TypeScript files */
+    "src/**/*.json"  /* Include JSON files */
+  ],
+}

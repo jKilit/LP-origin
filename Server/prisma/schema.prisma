@@ -1,0 +1,109 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  email         String         @unique
+  username      String         @unique
+  password      String
+  avatar        String?
+  createdAt     DateTime       @default(now())
+  role          Role           @default(STUDENT)
+  courses       Course[]       @relation("CourseInstructor")
+  enrollments   Enrollment[]
+  forumPosts    ForumPost[]
+  forumComments ForumComment[]
+}
+
+enum Role {
+  STUDENT
+  INSTRUCTOR
+}
+
+model Course {
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  description   String
+  category      String
+  tags          String[]
+  prerequisites String[]
+  createdAt     DateTime     @default(now())
+  instructor    User         @relation("CourseInstructor", fields: [instructorId], references: [id])
+  instructorId  String       @db.ObjectId
+  modules       Module[]
+  enrollments   Enrollment[]
+  forumPosts    ForumPost[]
+}
+
+model Module {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  courseId    String   @db.ObjectId
+  course      Course   @relation(fields: [courseId], references: [id])
+  lessons     Lesson[]
+  //quizzes     Quiz[]
+}
+
+model Lesson {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  content   String
+  videoUrl  String
+  resources String[]
+  moduleId  String   @db.ObjectId
+  module    Module   @relation(fields: [moduleId], references: [id])
+}
+
+// model Quiz {
+//   id        String     @id @default(auto()) @map("_id") @db.ObjectId
+//   title     String
+//   questions Question[]
+//   moduleId  String     @db.ObjectId
+//   module    Module     @relation(fields: [moduleId], references: [id])
+// }
+
+// model Question {
+//   id      String   @id @default(auto()) @map("_id") @db.ObjectId
+//   content String
+//   options String[]
+//   answer  String
+//   quizId  String   @db.ObjectId
+//   quiz    Quiz     @relation(fields: [quizId], references: [id])
+// }
+
+model Enrollment {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  userId   String @db.ObjectId
+  user     User   @relation(fields: [userId], references: [id])
+  courseId String @db.ObjectId
+  course   Course @relation(fields: [courseId], references: [id])
+  progress Int    @default(0)
+}
+
+model ForumPost {
+  id        String         @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  userId    String         @db.ObjectId
+  user      User           @relation(fields: [userId], references: [id])
+  courseId  String         @db.ObjectId
+  course    Course         @relation(fields: [courseId], references: [id])
+  comments  ForumComment[]
+  createdAt DateTime       @default(now())
+}
+
+model ForumComment {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  userId    String    @db.ObjectId
+  user      User      @relation(fields: [userId], references: [id])
+  postId    String    @db.ObjectId
+  post      ForumPost @relation(fields: [postId], references: [id])
+  createdAt DateTime  @default(now())
+}
