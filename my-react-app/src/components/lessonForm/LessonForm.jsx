@@ -47,7 +47,7 @@ const LessonForm = ({ lesson, index, onChange }) => {
         <Form.Label>Text</Form.Label>
         <Form.Control
           as="textarea"
-          rows={3}
+          rows={20}
           value={lesson.text}
           onChange={handleTextChange}
         />
