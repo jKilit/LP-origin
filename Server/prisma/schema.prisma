@@ -48,7 +48,6 @@ model Module {
   courseId    String   @db.ObjectId
   course      Course   @relation(fields: [courseId], references: [id])
   lessons     Lesson[]
-  //quizzes     Quiz[]
 }
 
 model Lesson {
@@ -60,23 +59,6 @@ model Lesson {
   moduleId  String   @db.ObjectId
   module    Module   @relation(fields: [moduleId], references: [id])
 }
-
-// model Quiz {
-//   id        String     @id @default(auto()) @map("_id") @db.ObjectId
-//   title     String
-//   questions Question[]
-//   moduleId  String     @db.ObjectId
-//   module    Module     @relation(fields: [moduleId], references: [id])
-// }
-
-// model Question {
-//   id      String   @id @default(auto()) @map("_id") @db.ObjectId
-//   content String
-//   options String[]
-//   answer  String
-//   quizId  String   @db.ObjectId
-//   quiz    Quiz     @relation(fields: [quizId], references: [id])
-// }
 
 model Enrollment {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
