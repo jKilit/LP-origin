@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import ModuleForm from "../moduleForm/ModuleForm";
+import apiRequest from "../../lib/apiRequest";
 import "./courseForm.scss";
 
 const CourseForm = () => {
+  const [courseTitle, setCourseTitle] = useState("");
+  const [courseDescription, setCourseDescription] = useState("");
   const [modules, setModules] = useState([
     { title: "", lessons: [{ title: "", text: "", links: [], files: [] }] },
   ]);
@@ -27,11 +30,40 @@ const CourseForm = () => {
     setActiveModule(activeModule === index ? null : index);
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const courseData = {
+      title: courseTitle,
+      description: courseDescription,
+      modules: modules.map((module) => ({
+        title: module.title,
+        lessons: module.lessons.map((lesson) => ({
+          title: lesson.title,
+          content: lesson.text,
+          url: lesson.links.length > 0 ? lesson.links[0] : "",
+        })),
+      })),
+    };
+
+    try {
+      const response = await apiRequest.post("/courses/createCourse", courseData);
+      console.log("Course created successfully:", response.data);
+    } catch (error) {
+      console.error("Error creating course:", error);
+    }
+  };
+
   return (
-    <Form className="course-form">
+    <Form className="course-form" onSubmit={handleSubmit}>
       <Form.Group controlId="courseTitle">
         <Form.Label>Course Title</Form.Label>
-        <Form.Control type="text" placeholder="Enter course title" />
+        <Form.Control
+          type="text"
+          placeholder="Enter course title"
+          value={courseTitle}
+          onChange={(e) => setCourseTitle(e.target.value)}
+        />
       </Form.Group>
 
       <Form.Group controlId="courseDescription">
@@ -40,6 +72,8 @@ const CourseForm = () => {
           as="textarea"
           rows={3}
           placeholder="Enter course description"
+          value={courseDescription}
+          onChange={(e) => setCourseDescription(e.target.value)}
         />
       </Form.Group>
 

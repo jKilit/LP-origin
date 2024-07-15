@@ -44,7 +44,6 @@ model Course {
 model Module {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
-  description String
   courseId    String   @db.ObjectId
   course      Course   @relation(fields: [courseId], references: [id])
   lessons     Lesson[]

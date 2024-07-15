@@ -77,11 +77,6 @@ const LessonForm = ({ lesson, index, onChange }) => {
           Add Link
         </Button>
       </div>
-
-      <Form.Group controlId={`lessonFiles-${index}`}>
-        <Form.Label>Files</Form.Label>
-        <Form.Control type="file" multiple onChange={handleFileChange} />
-      </Form.Group>
     </div>
   );
 };
