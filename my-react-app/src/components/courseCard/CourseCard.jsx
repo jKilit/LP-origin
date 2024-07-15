@@ -18,7 +18,7 @@ const CourseCard = ({ course, editable }) => {
           <div className="course-meta">
             <span className="course-author">By {course.author}</span>
             <span className="course-date">{course.date}</span>
-            <span className="course-date">{course.instructor}</span>
+            <span className="course-date">{course.instructor.username}</span>
           </div>
           {editable && (
           <Button variant="primary" onClick={() => alert("Edit Course")}>
