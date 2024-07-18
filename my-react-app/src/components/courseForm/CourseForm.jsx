@@ -3,9 +3,11 @@ import { Form, Button, Card } from "react-bootstrap";
 import ModuleForm from "../moduleForm/ModuleForm";
 import apiRequest from "../../lib/apiRequest";
 import "./courseForm.scss";
+import CloudinaryUploadWidget from "../../components/uploadWidget/uploadWidget";
 
 const CourseForm = () => {
   const [courseTitle, setCourseTitle] = useState("");
+  const [imageUrl, setImages] = useState();
   const [courseDescription, setCourseDescription] = useState("");
   const [modules, setModules] = useState([
     { title: "", lessons: [{ title: "", text: "", links: [], files: [] }] },
@@ -35,6 +37,7 @@ const CourseForm = () => {
 
     const courseData = {
       title: courseTitle,
+      image: imageUrl,
       description: courseDescription,
       modules: modules.map((module) => ({
         title: module.title,
@@ -45,13 +48,19 @@ const CourseForm = () => {
         })),
       })),
     };
-
     try {
-      const response = await apiRequest.post("/courses/createCourse", courseData);
+      const response = await apiRequest.post(
+        "/courses/createCourse",
+        courseData
+      );
       console.log("Course created successfully:", response.data);
     } catch (error) {
       console.error("Error creating course:", error);
     }
+  };
+
+  const createCourse = () => {
+    Navigate("/courses");
   };
 
   return (
@@ -76,6 +85,17 @@ const CourseForm = () => {
           onChange={(e) => setCourseDescription(e.target.value)}
         />
       </Form.Group>
+      <CloudinaryUploadWidget
+        uwConfig={{
+          cloudName: "dsyolmgmq",
+          uploadPreset: "Learning Platform",
+          multiple: true,
+          maxImageSize: 20000000,
+          folder: "avatars",
+        }}
+        setState={setImages}
+        text="Upload Images"
+      />
 
       <div className="modules-section">
         {modules.map((module, index) => (
@@ -97,12 +117,23 @@ const CourseForm = () => {
           </Card>
         ))}
       </div>
+      {imageUrl && (
+        <div className="image-preview">
+          <img src={imageUrl} alt={`Course image`} />
+        </div>
+      )}
+
       <div className="buttons">
         <Button variant="primary" onClick={addModule}>
           Add Module
         </Button>
 
-        <Button variant="success" type="submit" className="submit-button">
+        <Button
+          variant="success"
+          type="submit"
+          className="submit-button"
+          onClick={createCourse}
+        >
           Create Course
         </Button>
       </div>

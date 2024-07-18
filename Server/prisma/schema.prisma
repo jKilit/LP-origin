@@ -30,6 +30,7 @@ model Course {
   id            String       @id @default(auto()) @map("_id") @db.ObjectId
   title         String
   description   String
+  image         String?
   category      String
   tags          String[]
   prerequisites String[]
@@ -42,11 +43,11 @@ model Course {
 }
 
 model Module {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
-  courseId    String   @db.ObjectId
-  course      Course   @relation(fields: [courseId], references: [id])
-  lessons     Lesson[]
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  title    String
+  courseId String   @db.ObjectId
+  course   Course   @relation(fields: [courseId], references: [id])
+  lessons  Lesson[]
 }
 
 model Lesson {

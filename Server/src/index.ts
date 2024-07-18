@@ -5,6 +5,7 @@ import { PrismaClient } from '@prisma/client';
 import userRoutes from './routes/user.route';
 import authRoutes from './routes/auth.route';
 import courseRoutes from './routes/course.route';
+import enrollmentRoutes from './routes/enrollment.route';
 
 require('dotenv').config();
 const app = express();
@@ -17,6 +18,7 @@ app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/courses', courseRoutes);
+app.use('/api/enrollment', enrollmentRoutes);
 
 const PORT = process.env.PORT || 3005;
 

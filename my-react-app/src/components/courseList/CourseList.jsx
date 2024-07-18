@@ -42,7 +42,7 @@ const CourseList = () => {
           <CourseCard key={course.id} course={course} editable={false} />
         ))
       ) : (
-        <p>No courses available.</p>
+        <p>Loading...</p>
       )}
     </div>
   );

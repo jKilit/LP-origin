@@ -1,58 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import CourseDetails from "../../components/courseDetails/CourseDetails";
 import InstructorInfo from "../../components/instructorInfo/InstructorInfo";
 import CourseContent from "../../components/courseContent/CourseContent";
 import "./singleCoursePage.scss";
+import apiRequest from "../../lib/apiRequest";
 
 const SingleCoursePage = () => {
-  // Dummy course data
-  const course = {
-    id: "123",
-    title: "Introduction to Programming",
-    description: "Learn the basics of programming using Python.",
-    instructor: {
-      name: "John Doe",
-      bio: "An experienced software developer with a passion for teaching.",
-      image: "https://via.placeholder.com/100",
-    },
-    image: "https://via.placeholder.com/600x200",
-    content: [
-      {
-        title: "Module 1: Introduction to Python",
-        lessons: [
-          "What is Python?",
-          "Setting up the environment",
-          "Hello World in Python",
-        ],
-      },
-      {
-        title: "Module 2: Variables and Data Types",
-        lessons: [
-          "Understanding Variables",
-          "Data Types in Python",
-          "Type Casting",
-        ],
-      },
-      {
-        title: "Module 3: Control Structures",
-        lessons: ["If-Else Statements", "For Loops", "While Loops"],
-      },
-      {
-        title: "Module 4: Functions",
-        lessons: ["Defining Functions", "Function Arguments", "Return Values"],
-      },
-      {
-        title: "Module 5: Modules and Packages",
-        lessons: ["Creating Modules", "Using Packages", "Installing Packages"],
-      },
-    ],
-  };
+  const { id } = useParams();
+  const [course, setCourse] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchCourse = async () => {
+      try {
+        const response = await apiRequest.get(`/courses/${id}`);
+        setCourse(response.data);
+        console.log("Course fetched:", response.data);
+      } catch (error) {
+        setError("Error fetching course");
+        console.error("Error fetching course:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourse();
+  }, [id]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (!course) {
+    return <div>No course found</div>;
+  }
 
   return (
     <div className="single-course-page">
-      <CourseDetails course={course} />
-      <InstructorInfo instructor={course.instructor} />
-      <CourseContent content={course.content} />
+      <div className="container">
+        <CourseDetails course={course} />
+        <InstructorInfo instructor={course.instructor} />
+        <CourseContent content={course.modules} />
+      </div>
     </div>
   );
 };

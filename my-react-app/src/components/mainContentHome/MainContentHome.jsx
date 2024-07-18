@@ -1,6 +1,7 @@
 import React from "react";
 import CourseCard from "../courseCard/CourseCard";
 import ActivityItem from "../activityItem/ActivityItem";
+import "./mainContentHome.scss";
 
 const MainContent = ({
   // enrolledCourses,
@@ -94,8 +95,8 @@ const recommendedCourses = [
           <ActivityItem key={activity.id} activity={activity} />
         ))}
       </div>
+      <h3>Recommended Courses</h3>
       <div className="recommended-courses">
-        <h3>Recommended Courses</h3>
         {recommendedCourses.map((course) => (
           <CourseCard key={course.id} course={course} editable={false} />
         ))}

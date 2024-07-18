@@ -8,7 +8,7 @@ const ProfileCourseList = ({ title, courses, editable }) => {
       <h2>{title}</h2>
       <div className="courses-container">
         {courses.map((course) => (
-          <CourseCard key={course.id} course={course} editable={editable} />
+          <CourseCard className= "course-item"key={course.id} course={course} editable={editable} />
         ))}
       </div>
     </div>

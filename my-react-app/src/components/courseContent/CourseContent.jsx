@@ -1,10 +1,11 @@
-import React from 'react';
-import Accordion from 'react-bootstrap/Accordion';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import './courseContent.scss';
+import React from "react";
+import Accordion from "react-bootstrap/Accordion";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import "./courseContent.scss";
 
 const CourseContent = ({ content }) => {
+  console.log(content);
   return (
     <div className="course-content">
       <h2>Course Content</h2>
@@ -15,7 +16,12 @@ const CourseContent = ({ content }) => {
             <Accordion.Body>
               <ul>
                 {module.lessons.map((lesson, idx) => (
-                  <li key={idx}>{lesson}</li>
+                  <div>
+                    {lesson.title && <li key={idx}>{lesson.title}</li>}
+                    {lesson.content && <li> {lesson.content}</li>}
+                    {lesson.videoUrl && <li> {lesson.videoUrl}</li>}
+                    {/* Add files here later */}
+                  </div>
                 ))}
               </ul>
             </Accordion.Body>

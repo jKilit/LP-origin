@@ -5,7 +5,8 @@
   overflow: hidden;
   transition: transform 0.3s ease-in-out;
   width: 300px;
-  height: 200px; //ändra sen
+  height: auto;
+  margin: 20px;
 
   &:hover {
     transform: translateY(-5px);
@@ -36,11 +37,12 @@
 
     .course-meta {
       display: flex;
-      justify-content: space-between;
+      align-items: center;
 
-      .course-author {
-        font-size: 14px;
+      .course-instructor {
+        font-size: 20px;
         color: #888888;
+        margin: 10px;
       }
 
       .course-date {

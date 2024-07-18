@@ -36,7 +36,7 @@ function App() {
           element: <CoursesPage />,
         },
         {
-          path: "/specific",
+          path: "/courses/:id",
           element: <SingleCoursePage />,
         },
         {
