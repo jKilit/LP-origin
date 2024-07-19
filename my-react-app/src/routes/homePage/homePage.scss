@@ -19,11 +19,13 @@
 
   .content-container {
     display: flex;
+    flex-wrap: wrap;
     padding: 20px;
     gap: 20px;
 
     .main-content {
       flex: 2;
+      min-width: 300px;
       .course-overview {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -71,6 +73,7 @@
 
     .sidebar {
       flex: 1;
+      min-width: 300px; // Ensure a minimum width for sidebar
       display: flex;
       flex-direction: column;
       gap: 20px;
@@ -100,6 +103,12 @@
           }
         }
       }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .content-container {
+      flex-direction: column; // Stack main content and sidebar vertically on small screens
     }
   }
 }
