@@ -3,12 +3,14 @@ import Button from "react-bootstrap/Button";
 import "./enrollmentSection.scss"; // Import the SCSS file
 import apiRequest from "../../lib/apiRequest";
 import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 
 const EnrollmentSection = ({ courseId }) => {
   const [enrolling, setEnrolling] = useState(false);
   const { currentUser} = useContext(AuthContext);
   const userId = currentUser ? currentUser.id : null;
+  const navigate = useNavigate();
 
   const handleEnroll = async () => {
     setEnrolling(true);
@@ -17,7 +19,7 @@ const EnrollmentSection = ({ courseId }) => {
         courseId,
         userId,
       });
-      alert("You have successfully enrolled in the course!");
+      navigate("/home");
     } catch (error) {
       alert("Error enrolling in the course");
       console.error("Error enrolling in course:", error);
