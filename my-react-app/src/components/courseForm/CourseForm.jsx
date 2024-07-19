@@ -4,6 +4,7 @@ import ModuleForm from "../moduleForm/ModuleForm";
 import apiRequest from "../../lib/apiRequest";
 import "./courseForm.scss";
 import CloudinaryUploadWidget from "../../components/uploadWidget/uploadWidget";
+import { useNavigate } from "react-router-dom";
 
 const CourseForm = () => {
   const [courseTitle, setCourseTitle] = useState("");
@@ -13,6 +14,7 @@ const CourseForm = () => {
     { title: "", lessons: [{ title: "", text: "", links: [], files: [] }] },
   ]);
   const [activeModule, setActiveModule] = useState(null);
+  const Navigate = useNavigate();
 
   const addModule = () => {
     setModules([
@@ -33,8 +35,6 @@ const CourseForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
     const courseData = {
       title: courseTitle,
       image: imageUrl,
@@ -60,6 +60,7 @@ const CourseForm = () => {
   };
 
   const createCourse = () => {
+    handleSubmit();
     Navigate("/courses");
   };
 
