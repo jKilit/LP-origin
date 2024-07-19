@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import CourseDetails from "../../components/courseDetails/CourseDetails";
 import InstructorInfo from "../../components/instructorInfo/InstructorInfo";
 import CourseContent from "../../components/courseContent/CourseContent";
+import EnrollmentSection from "../../components/enrollmentSection/EnrollmentSection";
 import "./singleCoursePage.scss";
 import apiRequest from "../../lib/apiRequest";
 
@@ -47,6 +48,7 @@ const SingleCoursePage = () => {
         <CourseDetails course={course} />
         <InstructorInfo instructor={course.instructor} />
         <CourseContent content={course.modules} />
+        <EnrollmentSection courseId={course.id} />
       </div>
     </div>
   );
