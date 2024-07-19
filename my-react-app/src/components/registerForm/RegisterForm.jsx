@@ -17,6 +17,7 @@ const RegisterForm = () => {
     const password = formData.get("password");
     const email = formData.get("email");
     const confirmPassword = formData.get("confirmPassword");
+    const role = formData.get("role");
 
     try {
       const res = await apiRequest.post("/auth/register", {
@@ -24,6 +25,7 @@ const RegisterForm = () => {
         password,
         email,
         confirmPassword,
+        role
       });
       console.log(res.data.message);
       updateUser(res.data.user);
@@ -63,6 +65,15 @@ const RegisterForm = () => {
           placeholder="Confirm Password"
         />
       </Form.Group>
+
+      <Form.Group controlId="role">
+        <Form.Label>Role</Form.Label>
+        <Form.Control as="select" name="role">
+          <option value="STUDENT">Student</option>
+          <option value="INSTRUCTOR">Instructor</option>
+        </Form.Control>
+      </Form.Group>
+
       {error && <p className="error">{error}</p>}
 
       <Button variant="primary" type="submit" className="register-button">

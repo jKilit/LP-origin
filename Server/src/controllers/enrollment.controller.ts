@@ -41,3 +41,25 @@ export const enrollUserInCourse = async (req: Request, res: Response) => {
         return res.status(500).json({ error: 'Internal server error' });
     }
 };
+
+export const getEnrollmentsForUser = async (req: Request, res: Response) => {
+    const { userId } = req.params;
+
+    if (!userId) {
+        return res.status(400).json({ error: 'User ID is required' });
+    }
+
+    try {
+        const enrollments = await prisma.enrollment.findMany({
+            where: { userId },
+            include: {
+                course: true, // Include course details
+            },
+        });
+
+        return res.status(200).json(enrollments);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+};

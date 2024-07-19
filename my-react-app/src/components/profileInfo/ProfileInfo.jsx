@@ -7,7 +7,7 @@ const ProfileInformation = ({ user }) => {
       <h3>Profile Information</h3>
       <ul>
         <li>
-          <strong>Name:</strong> {user.name}
+          <strong>Name:</strong> {user.username}
         </li>
         <li>
           <strong>Email:</strong> {user.email}

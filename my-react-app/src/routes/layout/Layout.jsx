@@ -34,4 +34,24 @@ function RequireAuth() {
   );
 }
 
-export {Layout, RequireAuth};
+function RequireRole({ role }) {
+  const { currentUser } = useContext(AuthContext);
+  console.log("currentUser:", currentUser?.role);
+
+  if (currentUser?.role !== role) {
+    return <Navigate to="/login" />;
+  }
+
+  return (
+    <div className="layout">
+      <div className="header">
+        <Header />
+      </div>
+      <div className="content">
+        <Outlet />
+      </div>
+    </div>
+  );
+}
+
+export { Layout, RequireAuth, RequireRole };

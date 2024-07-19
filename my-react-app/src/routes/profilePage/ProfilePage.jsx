@@ -27,7 +27,9 @@ const ProfilePage = () => {
 
   const fetchData = async () => {
     try {
-      const response = await apiRequest.get(`/courses/instructorCourses/${userId}`);
+      const response = await apiRequest.get(
+        `/courses/instructorCourses/${userId}`
+      );
       console.log(response.data);
       setCurrentCourses(response.data);
     } catch (error) {
@@ -45,9 +47,12 @@ const ProfilePage = () => {
 
   return (
     <div className="profile-page">
-      <Button variant="primary" onClick={handleCreateCourse}>
-        Create new course
-      </Button>
+      { currentUser.role === "INSTRUCTOR" &&
+        <Button variant="primary" onClick={handleCreateCourse}>
+          Create new course
+        </Button>
+      }
+
       <Button variant="dark" onClick={handleOnClick}>
         Logout
       </Button>

@@ -14,7 +14,7 @@ model User {
   password      String
   avatar        String?
   createdAt     DateTime       @default(now())
-  role          Role           @default(STUDENT)
+  role          Role
   courses       Course[]       @relation("CourseInstructor")
   enrollments   Enrollment[]
   forumPosts    ForumPost[]

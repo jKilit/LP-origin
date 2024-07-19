@@ -9,9 +9,9 @@ interface CourseRequestBody {
         title: string;
         lessons: {
             title: string;
-            type: string;
             url: string;
             content?: string;
+            resources?: string[];
         }[];
     }[];
 }
@@ -19,8 +19,7 @@ interface CourseRequestBody {
 export const createCourse = async (req: Request, res: Response) => {
     const { title, image, description, modules } = req.body as CourseRequestBody;
 
-    // Assuming you have authenticated user information available in req.user
-    const loggedInUserId = req.userId; // Adjust this according to your authentication setup
+    const loggedInUserId = req.userId;
 
     if (!title || !description || !loggedInUserId || !modules) {
         return res.status(400).json({ error: "Please provide all required fields: title, description, modules" });
@@ -31,7 +30,7 @@ export const createCourse = async (req: Request, res: Response) => {
             data: {
                 title,
                 description,
-                image: image,
+                image: image || "",
                 category: "",
                 tags: [],
                 prerequisites: [],
@@ -49,7 +48,7 @@ export const createCourse = async (req: Request, res: Response) => {
                                 title: lesson.title,
                                 content: lesson.content || "",
                                 videoUrl: lesson.url || "",
-                                resources: [],
+                                resources: lesson.resources || [], // Include resources here
                             })),
                         },
                     })),
@@ -61,6 +60,7 @@ export const createCourse = async (req: Request, res: Response) => {
                         lessons: true,
                     },
                 },
+                instructor: true,
             },
         });
 
@@ -91,7 +91,7 @@ export const getCourses = async (req: Request, res: Response) => {
         return res.status(200).json(courses);
     } catch (error) {
         console.error("Error fetching courses:", error);
-        return res.status(500).json({ error: "An error occurred while fetching courses" });
+        return res.status(500).json(error.message);
     }
 };
 
@@ -171,7 +171,6 @@ export const getCoursesByUserId = async (req: Request, res: Response) => {
     }
 }
 
-
 export const enrollUserInCourse = async (req: Request, res: Response) => {
     const { userId, courseId } = req.body;
 
@@ -180,7 +179,6 @@ export const enrollUserInCourse = async (req: Request, res: Response) => {
     }
 
     try {
-        // Check if the user and course exist
         const user = await prisma.user.findUnique({ where: { id: userId } });
         const course = await prisma.course.findUnique({ where: { id: courseId } });
 
@@ -188,7 +186,6 @@ export const enrollUserInCourse = async (req: Request, res: Response) => {
             return res.status(404).json({ error: 'User or Course not found' });
         }
 
-        // Check if the user is already enrolled in the course
         const existingEnrollment = await prisma.enrollment.findFirst({
             where: { userId, courseId },
         });
@@ -197,12 +194,11 @@ export const enrollUserInCourse = async (req: Request, res: Response) => {
             return res.status(400).json({ error: 'User is already enrolled in this course' });
         }
 
-        // Enroll the user in the course
         const enrollment = await prisma.enrollment.create({
             data: {
                 userId,
                 courseId,
-                progress: 0, // initial progress
+                progress: 0,
             },
         });
 

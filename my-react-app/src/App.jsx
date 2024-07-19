@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import {Layout, RequireAuth} from "./routes/layout/Layout";
+import { Layout, RequireAuth, RequireRole } from "./routes/layout/Layout";
 import Login from "./routes/loginPage/LoginPage";
 import Register from "./routes/registerPage/RegisterPage";
 import LandingPage from "./routes/landingPage/LandingPage";
@@ -39,10 +39,6 @@ function App() {
           path: "/courses/:id",
           element: <SingleCoursePage />,
         },
-        {
-          path: "/create-course",
-          element: <CreateCoursePage />,
-        },
       ],
     },
     {
@@ -52,6 +48,16 @@ function App() {
         {
           path: "/profile",
           element: <ProfilePage />,
+        },
+      ],
+    },
+    {
+      path: "/",
+      element: <RequireRole role={"INSTRUCTOR"} />,
+      children: [
+        {
+          path: "/create-course",
+          element: <CreateCoursePage />,
         },
       ],
     },
