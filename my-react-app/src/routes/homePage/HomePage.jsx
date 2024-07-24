@@ -39,7 +39,7 @@ const HomePage = () => {
   return (
     <div className="home-page">
       <header className="welcome-section">
-        <h1>Welcome Back, {currentUser.name}!</h1>
+        <h1>Welcome Back!📖</h1>
         <p>Ready to continue your learning journey?</p>
       </header>
       <div className="content-container">

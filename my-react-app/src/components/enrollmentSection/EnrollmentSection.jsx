@@ -1,28 +1,29 @@
 import React, { useContext, useState } from "react";
 import Button from "react-bootstrap/Button";
-import "./enrollmentSection.scss"; // Import the SCSS file
-import apiRequest from "../../lib/apiRequest";
+import "./enrollmentSection.scss";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-
+import apiRequest from "../../lib/apiRequest";
 
 const EnrollmentSection = ({ courseId }) => {
   const [enrolling, setEnrolling] = useState(false);
-  const { currentUser} = useContext(AuthContext);
-  const userId = currentUser ? currentUser.id : null;
+  const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleEnroll = async () => {
+    if (!currentUser) {
+      // Handle case when user is not logged in
+      alert("You must be logged in to enroll in a course.");
+      return;
+    }
+
     setEnrolling(true);
     try {
-      await apiRequest.post("/enrollment/enrollUserInCourse", {
-        courseId,
-        userId,
-      });
-      navigate("/home");
+      // Optionally handle any additional logic here, e.g., check if the user is already enrolled
+      navigate(`/checkout/${courseId}`);
     } catch (error) {
-      alert("Error enrolling in the course");
-      console.error("Error enrolling in course:", error);
+      console.error("Error during enrollment:", error);
+      alert("An error occurred while enrolling.");
     } finally {
       setEnrolling(false);
     }
@@ -42,7 +43,7 @@ const EnrollmentSection = ({ courseId }) => {
           onClick={handleEnroll}
           disabled={enrolling}
         >
-          {enrolling ? "Enrolling..." : "Join Program"}
+          {enrolling ? "Going to payment..." : "Join Program"}
         </Button>
       </div>
     </div>

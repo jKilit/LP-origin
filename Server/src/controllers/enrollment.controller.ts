@@ -31,7 +31,7 @@ export const enrollUserInCourse = async (req: Request, res: Response) => {
             data: {
                 userId,
                 courseId,
-                progress: 0, // initial progress
+                progress: 0,
             },
         });
 

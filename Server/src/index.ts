@@ -6,6 +6,7 @@ import userRoutes from './routes/user.route';
 import authRoutes from './routes/auth.route';
 import courseRoutes from './routes/course.route';
 import enrollmentRoutes from './routes/enrollment.route';
+import stripeRoutes from './routes/stripe.route';
 
 require('dotenv').config();
 const app = express();
@@ -19,6 +20,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/enrollment', enrollmentRoutes);
+app.use('/api/stripe', stripeRoutes);
 
 const PORT = process.env.PORT || 3005;
 

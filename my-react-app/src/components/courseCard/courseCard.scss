@@ -38,6 +38,7 @@
     .course-meta {
       display: flex;
       align-items: center;
+      flex-direction: column;
 
       .course-instructor {
         font-size: 20px;
@@ -50,5 +51,10 @@
         color: #888888;
       }
     }
+  }
+  .see-More {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
   }
 }

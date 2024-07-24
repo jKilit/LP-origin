@@ -8,6 +8,8 @@ import CoursesPage from "./routes/coursesPage/CoursesPage";
 import SingleCoursePage from "./routes/singleCoursePage/SingleCoursePage";
 import ProfilePage from "./routes/profilePage/ProfilePage";
 import CreateCoursePage from "./routes/createCoursePage/CreateCoursePage";
+import InstructorPage from "./routes/instructorPage/InstructorPage";
+import CheckoutPage from "./routes/checkoutPage/CheckoutPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -18,10 +20,6 @@ function App() {
         {
           path: "/",
           element: <LandingPage />,
-        },
-        {
-          path: "/home",
-          element: <HomePage />,
         },
         {
           path: "/login",
@@ -49,6 +47,10 @@ function App() {
           path: "/profile",
           element: <ProfilePage />,
         },
+        {
+          path: "/checkout/:courseId",
+          element: <CheckoutPage />,
+        },
       ],
     },
     {
@@ -58,6 +60,26 @@ function App() {
         {
           path: "/create-course",
           element: <CreateCoursePage />,
+        },
+      ],
+    },
+    {
+      path: "/",
+      element: <RequireRole role={"INSTRUCTOR"} />,
+      children: [
+        {
+          path: "/instructor/:id",
+          element: <InstructorPage />,
+        },
+      ],
+    },
+    {
+      path: "/",
+      element: <RequireRole role={"STUDENT"} />,
+      children: [
+        {
+          path: "/home",
+          element: <HomePage />,
         },
       ],
     },

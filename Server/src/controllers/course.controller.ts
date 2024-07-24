@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 interface CourseRequestBody {
     title: string;
     description: string;
+    price: number;
     image?: string;
     modules: {
         title: string;
@@ -17,7 +18,7 @@ interface CourseRequestBody {
 }
 
 export const createCourse = async (req: Request, res: Response) => {
-    const { title, image, description, modules } = req.body as CourseRequestBody;
+    const { title, image, description, modules, price } = req.body as CourseRequestBody;
 
     const loggedInUserId = req.userId;
 
@@ -35,6 +36,7 @@ export const createCourse = async (req: Request, res: Response) => {
                 tags: [],
                 prerequisites: [],
                 createdAt: new Date(),
+                price,
                 instructor: {
                     connect: {
                         id: loggedInUserId,
@@ -120,8 +122,12 @@ export const getCourseById = async (req: Request, res: Response) => {
                 },
                 enrollments: {
                     select: {
-                        userId: true,
                         progress: true,
+                        user: {
+                            select: {
+                                username: true,
+                            },
+                        },
                     },
                 },
             },
