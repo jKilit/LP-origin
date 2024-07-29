@@ -69,7 +69,7 @@ const SingleCoursePage = () => {
       <div className="container">
         <CourseDetails course={course} />
         <InstructorInfo instructor={course.instructor} />
-        <CourseContent content={course.modules} />
+        <CourseContent content={course.modules} hasAccess={userIsEnrolled} />
         {userIsEnrolled ? <></> : (
           <EnrollmentSection courseId={course.id} />
         )}

@@ -1,11 +1,8 @@
 import React from "react";
 import Accordion from "react-bootstrap/Accordion";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
 import "./courseContent.scss";
 
-const CourseContent = ({ content }) => {
-  console.log(content);
+const CourseContent = ({ content, hasAccess }) => {
   return (
     <div className="course-content">
       <h2>Course Content</h2>
@@ -14,15 +11,36 @@ const CourseContent = ({ content }) => {
           <Accordion.Item eventKey={index.toString()} key={index}>
             <Accordion.Header>{module.title}</Accordion.Header>
             <Accordion.Body>
-              <ul>
-                {module.lessons.map((lesson, idx) => (
-                  <div>
-                    {lesson.title && <li key={idx}>{lesson.title}</li>}
-                    {lesson.content && <li> {lesson.content}</li>}
-                    {lesson.videoUrl && <li> {lesson.videoUrl}</li>}
-                    {/* Add files here later */}
-                  </div>
-                ))}
+              <ul className="module-lessons">
+                {module.lessons.map((lesson, idx) =>
+                  hasAccess ? (
+                    <Accordion key={idx}>
+                      <Accordion.Item eventKey={idx.toString()}>
+                        <Accordion.Header>{lesson.title}</Accordion.Header>
+                        <Accordion.Body>
+                          <div className="lesson-body">
+                            <p>{lesson.content}</p>
+                            {lesson.videoUrl && (
+                              <div className="lesson-video">
+                                <video controls>
+                                  <source
+                                    src={lesson.videoUrl}
+                                    type="video/mp4"
+                                  />
+                                  Your browser does not support the video tag.
+                                </video>
+                              </div>
+                            )}
+                          </div>
+                        </Accordion.Body>
+                      </Accordion.Item>
+                    </Accordion>
+                  ) : (
+                    <li key={idx} className="lesson-title">
+                      {lesson.title}
+                    </li>
+                  )
+                )}
               </ul>
             </Accordion.Body>
           </Accordion.Item>
