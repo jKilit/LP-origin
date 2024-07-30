@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Form, Button, Card } from "react-bootstrap";
+import React from "react";
+import { Form, Button } from "react-bootstrap";
 import LessonForm from "../lessonForm/LessonForm";
 import "./moduleForm.scss";
 
@@ -9,12 +9,13 @@ const ModuleForm = ({ module, index, onChange }) => {
       ...module,
       lessons: [
         ...module.lessons,
-        { title: "", text: "", links: [], files: [] },
+        { title: "", text: "", links: [], files: [], videoUrl: "" },
       ],
     });
   };
 
   const handleLessonChange = (lessonIndex, newLesson) => {
+    console.log("Updating lesson in ModuleForm:", lessonIndex, "with:", newLesson); // Debugging line
     const updatedLessons = module.lessons.map((lesson, idx) =>
       idx === lessonIndex ? newLesson : lesson
     );

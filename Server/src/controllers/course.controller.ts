@@ -36,7 +36,7 @@ export const createCourse = async (req: Request, res: Response) => {
                 tags: [],
                 prerequisites: [],
                 createdAt: new Date(),
-                price,
+                price: price || 0,
                 instructor: {
                     connect: {
                         id: loggedInUserId,

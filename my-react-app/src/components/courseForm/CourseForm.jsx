@@ -11,7 +11,7 @@ const CourseForm = () => {
   const [imageUrl, setImages] = useState();
   const [courseDescription, setCourseDescription] = useState("");
   const [modules, setModules] = useState([
-    { title: "", lessons: [{ title: "", text: "", links: [], files: [] }] },
+    { title: "", lessons: [{ title: "", text: "", links: [], files: [] , videoUrl: ""}] },
   ]);
   const [activeModule, setActiveModule] = useState(null);
   const Navigate = useNavigate();
@@ -19,11 +19,12 @@ const CourseForm = () => {
   const addModule = () => {
     setModules([
       ...modules,
-      { title: "", lessons: [{ title: "", text: "", links: [], files: [] }] },
+      { title: "", lessons: [{ title: "", text: "", links: [], files: [] , videoUrl: ""}] },
     ]);
   };
 
   const handleModuleChange = (index, newModule) => {
+    console.log("Updating module in CourseForm:", index, "with:", newModule); // Debugging line
     const updatedModules = modules.map((module, idx) =>
       idx === index ? newModule : module
     );
@@ -34,7 +35,7 @@ const CourseForm = () => {
     setActiveModule(activeModule === index ? null : index);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     const courseData = {
       title: courseTitle,
       image: imageUrl,
@@ -44,10 +45,11 @@ const CourseForm = () => {
         lessons: module.lessons.map((lesson) => ({
           title: lesson.title,
           content: lesson.text,
-          url: lesson.links.length > 0 ? lesson.links[0] : "",
+          url: lesson.videoUrl,
         })),
       })),
     };
+
     try {
       const response = await apiRequest.post(
         "/courses/createCourse",
