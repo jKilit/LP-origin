@@ -64,13 +64,18 @@ const SingleCoursePage = () => {
     return <div>No course found</div>;
   }
 
+  const isSameUser = currentUser && course.instructor && currentUser.username === course.instructor.username;
+  console.log("currentUser", currentUser ? currentUser.username : "N/A");
+  console.log("instructor", course.instructor ? course.instructor.username : "N/A");
+  console.log("isSameUser", isSameUser);
+
   return (
     <div className="single-course-page">
       <div className="container">
         <CourseDetails course={course} />
         <InstructorInfo instructor={course.instructor} />
-        <CourseContent content={course.modules} hasAccess={userIsEnrolled} />
-        {userIsEnrolled ? <></> : (
+        <CourseContent content={course.modules} hasAccess={userIsEnrolled || isSameUser} />
+        {userIsEnrolled || isSameUser ? null : (
           <EnrollmentSection courseId={course.id} />
         )}
       </div>

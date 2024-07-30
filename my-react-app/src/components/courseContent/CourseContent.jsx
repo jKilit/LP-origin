@@ -3,9 +3,7 @@ import Accordion from "react-bootstrap/Accordion";
 import "./courseContent.scss";
 import { AuthContext } from "../../context/AuthContext";
 
-const CourseContent = ({ content, hasAccess }) => {
-  const {currentUser} = useContext(AuthContext);
-  const isInstructor = currentUser && currentUser.role === "INSTRUCTOR"; //Todo remove later
+const CourseContent = ({ content, hasAccess, isSameUser }) => {
   return (
     <div className="course-content">
       <h2>Course Content</h2>
@@ -16,7 +14,7 @@ const CourseContent = ({ content, hasAccess }) => {
             <Accordion.Body>
               <ul className="module-lessons">
                 {module.lessons.map((lesson, idx) =>
-                  hasAccess || isInstructor ? (
+                  hasAccess || isSameUser ? (
                     <Accordion key={idx}>
                       <Accordion.Item eventKey={idx.toString()}>
                         <Accordion.Header>{lesson.title}</Accordion.Header>
