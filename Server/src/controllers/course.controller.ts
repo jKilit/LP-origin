@@ -214,3 +214,34 @@ export const enrollUserInCourse = async (req: Request, res: Response) => {
         return res.status(500).json({ error: 'Internal server error' });
     }
 };
+
+export const deleteCourse = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+        // Delete enrollments for the course
+        await prisma.enrollment.deleteMany({
+            where: { courseId: id },
+        });
+
+        // Delete lessons for the course
+        await prisma.lesson.deleteMany({
+            where: { module: { courseId: id } },
+        });
+
+        // Delete modules for the course
+        await prisma.module.deleteMany({
+            where: { courseId: id },
+        });
+
+        // Delete the course
+        await prisma.course.delete({
+            where: { id },
+        });
+
+        return res.status(200).json({ message: 'Course and related data deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+};

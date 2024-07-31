@@ -12,9 +12,6 @@ const ProfileInformation = ({ user }) => {
         <li>
           <strong>Email:</strong> {user.email}
         </li>
-        <li>
-          <strong>Bio:</strong> {user.bio}
-        </li>
       </ul>
     </div>
   );

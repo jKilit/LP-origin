@@ -57,8 +57,7 @@ const ProfilePage = () => {
         Logout
       </Button>
       <ProfileInformation user={currentUser} />
-      <ProfileCourseList title="My Courses" courses={currentCourses} seeMore />
-      {/* <ProfileCourseList title="Enrolled Courses" courses={enrolledCourses} /> */}
+      <ProfileCourseList title="My Courses" courses={currentCourses} seeMore includeDelete />
     </div>
   );
 };
