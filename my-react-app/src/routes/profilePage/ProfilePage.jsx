@@ -15,6 +15,8 @@ const ProfilePage = () => {
   const { currentUser } = useContext(AuthContext);
   const userId = currentUser.id;
   const { updateUser } = useContext(AuthContext);
+  const role = currentUser.role;
+  const isStudent = role === "STUDENT";
   const handleOnClick = async () => {
     try {
       await apiRequest.post("/auth/logout");
@@ -57,7 +59,7 @@ const ProfilePage = () => {
         Logout
       </Button>
       <ProfileInformation user={currentUser} />
-      <ProfileCourseList title="My Courses" courses={currentCourses} seeMore includeDelete />
+      {!isStudent && <ProfileCourseList title="My Courses" courses={currentCourses} seeMore includeDelete />}
     </div>
   );
 };

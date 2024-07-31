@@ -12,7 +12,6 @@ export const AuthContextProvider = ({ children }) => {
       return null;
     }
   });
-
   const updateUser = (data) => {
     setCurrentUser(data);
     localStorage.setItem("user", JSON.stringify(data));

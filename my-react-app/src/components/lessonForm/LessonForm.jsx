@@ -101,7 +101,6 @@ const LessonForm = ({ lesson, index, onChange }) => {
           text="Upload Course Video"
         />
       </div>
-      <strong>Video URL:</strong> {videoUrl}
     </div>
   );
 };

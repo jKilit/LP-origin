@@ -1,7 +1,5 @@
-import React, { useContext } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import "./courseContent.scss";
-import { AuthContext } from "../../context/AuthContext";
 
 const CourseContent = ({ content, hasAccess, isSameUser }) => {
   return (
