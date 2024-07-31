@@ -10,6 +10,7 @@ const CourseForm = () => {
   const [courseTitle, setCourseTitle] = useState("");
   const [imageUrl, setImages] = useState();
   const [courseDescription, setCourseDescription] = useState("");
+  const [priceValue, setPrice] = useState("");
   const [modules, setModules] = useState([
     { title: "", lessons: [{ title: "", text: "", links: [], files: [] , videoUrl: ""}] },
   ]);
@@ -39,6 +40,7 @@ const CourseForm = () => {
     const courseData = {
       title: courseTitle,
       image: imageUrl,
+      price: parseFloat(priceValue),
       description: courseDescription,
       modules: modules.map((module) => ({
         title: module.title,
@@ -65,6 +67,9 @@ const CourseForm = () => {
     handleSubmit();
     Navigate("/courses");
   };
+  const handleImageUpload = (e) => {
+    e.preventDefault();
+  }
 
   return (
     <Form className="course-form" onSubmit={handleSubmit}>
@@ -88,17 +93,29 @@ const CourseForm = () => {
           onChange={(e) => setCourseDescription(e.target.value)}
         />
       </Form.Group>
-      <CloudinaryUploadWidget
-        uwConfig={{
-          cloudName: "dsyolmgmq",
-          uploadPreset: "Learning Platform",
-          multiple: true,
-          maxImageSize: 20000000,
-          folder: "avatars",
-        }}
-        setState={setImages}
-        text="Upload Images"
-      />
+      <Form.Group controlId="price">
+        <Form.Label>Price $</Form.Label>
+        <Form.Control
+          as="textarea"
+          rows={1}
+          placeholder="Enter course price"
+          value={priceValue}
+          onChange={(e) => setPrice(e.target.value)}
+        />
+      </Form.Group>
+      <div onClick={handleImageUpload}>
+        <CloudinaryUploadWidget
+          uwConfig={{
+            cloudName: "dsyolmgmq",
+            uploadPreset: "Learning Platform",
+            multiple: true,
+            maxImageSize: 20000000,
+            folder: "avatars",
+          }}
+          setState={setImages}
+          text="Upload Images"
+        />
+      </div>
 
       <div className="modules-section">
         {modules.map((module, index) => (

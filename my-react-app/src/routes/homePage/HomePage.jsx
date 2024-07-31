@@ -9,7 +9,6 @@ const HomePage = () => {
   const { currentUser } = useContext(AuthContext);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
 
-  // Dummy data for recent activity and recommended courses
   const recentActivity = [
     { id: 1, description: "Completed Module 1 of JavaScript Basics" },
     { id: 2, description: "Started Python for Data Science course" },

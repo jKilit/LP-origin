@@ -17,8 +17,6 @@ model User {
   role          Role
   courses       Course[]       @relation("CourseInstructor")
   enrollments   Enrollment[]
-  forumPosts    ForumPost[]
-  forumComments ForumComment[]
 }
 
 enum Role {
@@ -39,7 +37,6 @@ model Course {
   instructorId  String       @db.ObjectId
   modules       Module[]
   enrollments   Enrollment[]
-  forumPosts    ForumPost[]
   price         Float
 }
 
@@ -68,25 +65,4 @@ model Enrollment {
   courseId String @db.ObjectId
   course   Course @relation(fields: [courseId], references: [id])
   progress Int    @default(0)
-}
-
-model ForumPost {
-  id        String         @id @default(auto()) @map("_id") @db.ObjectId
-  content   String
-  userId    String         @db.ObjectId
-  user      User           @relation(fields: [userId], references: [id])
-  courseId  String         @db.ObjectId
-  course    Course         @relation(fields: [courseId], references: [id])
-  comments  ForumComment[]
-  createdAt DateTime       @default(now())
-}
-
-model ForumComment {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  content   String
-  userId    String    @db.ObjectId
-  user      User      @relation(fields: [userId], references: [id])
-  postId    String    @db.ObjectId
-  post      ForumPost @relation(fields: [postId], references: [id])
-  createdAt DateTime  @default(now())
 }

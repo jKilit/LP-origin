@@ -8,12 +8,14 @@ const InstructorPage = () => {
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [instructor, setInstructor] = useState(null);
 
   useEffect(() => {
     const fetchCourseDetails = async () => {
       try {
         const response = await apiRequest.get(`/courses/${id}`);
         console.log("Course fetched:", response.data);
+        setInstructor(response.data.instructor);
         setCourse(response.data);
       } catch (error) {
         setError("Error fetching course details");
@@ -56,20 +58,12 @@ const InstructorPage = () => {
         <div className="instructor-info">
           <h3>Instructor Details</h3>
           <div className="instructor-details">
-            <img
-              src={course.instructor.photo || "/default-instructor.jpg"}
-              alt={`Instructor ${course.instructor.username}`}
-            />
             <div className="details">
-              <h4>{course.instructor.username}</h4>
               <p>
-                <strong>Bio:</strong>{" "}
-                {course.instructor.bio || "Bio not available"}
-              </p>
-              <p>
-                <strong>Email:</strong>{" "}
-                {course.instructor.email || "Email not available"}
-              </p>
+                <strong>The instructor for this course is: </strong>{" "}
+                {instructor.username || "Username not available"}
+
+                </p>
             </div>
           </div>
         </div>
